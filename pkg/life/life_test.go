@@ -11,7 +11,7 @@ func TestNewWorld(t *testing.T) {
 	height := 10
 	width := 4
 	// Вызываем тестируемую функцию
-	world := life.NewWorld(height, width)
+	world, _ := life.NewWorld(height, width)
 	// Проверяем, что в объекте указана верная высота сетки
 	if world.Height != height {
 		t.Errorf("expected height: %d, actual height: %d", height, world.Height)

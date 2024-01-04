@@ -1,6 +1,7 @@
 package life
 
 import (
+	"errors"
 	"math/rand"
 	"strings"
 	"time"
@@ -9,6 +10,10 @@ import (
 const (
 	brownSquare = "\xF0\x9F\x9F\xAB"
 	greenSquare = "\xF0\x9F\x9F\xA9"
+)
+
+var (
+	ErrNonPositiveSize = errors.New("size of the world is not positive")
 )
 
 type World struct {
@@ -36,13 +41,17 @@ func (w *World) String() string {
 }
 
 // Используйте код из предыдущего урока по игре «Жизнь»
-func NewWorld(height, width int) *World {
+func NewWorld(height, width int) (*World, error) {
+	if height <= 0 || width <= 0 {
+		return nil, ErrNonPositiveSize
+	}
+
 	matrix := createMatrix(height, width)
 	return &World{
 		Height: height,
 		Width:  width,
 		Cells:  matrix,
-	}
+	}, nil
 }
 
 func createMatrix(height int, width int) [][]bool {
